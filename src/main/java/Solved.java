@@ -1,17 +1,17 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Solved {
+class Solved {
     private int COUNT = 0;
 
     private int size;
     private OtherMethod om = new OtherMethod();
 
-    private List<int[]> MovePosible = new ArrayList();
+    private List<int[]> MovePossible = new ArrayList();
 
-    private List<int[]> buffAllMoveposibleState = new ArrayList();
+    private List<int[]> buffAllMovePossibleState = new ArrayList();
 
-    private List<int[]> buffMovePosible = new ArrayList<>();
+    private List<int[]> buffMovePossible = new ArrayList<>();
 
     void play(boolean[] boardState) {
 
@@ -27,8 +27,7 @@ public class Solved {
         printWinningWay(sBoardState);
     }
 
-
-    boolean solved(boolean[] boardState, BoardState node) {
+    private boolean solved(boolean[] boardState, BoardState node) {
 
         if (bSolved(boardState))
             return true;
@@ -48,7 +47,6 @@ public class Solved {
         return foundSolved;
     }
 
-
     private void printWinningWay(BoardState boardState) {
         om.print(boardState.getBoardState(),size);
         System.out.println();
@@ -63,12 +61,12 @@ public class Solved {
         }
     }
 
-    public List<boolean[]> possibleState(boolean[] boardState) {
+    private List<boolean[]> possibleState(boolean[] boardState) {
         List<boolean[]> state = new ArrayList();
 
-        List<int[]> sBuffAllMoveposibleState = AllMoveposibleState(boardState);
+        List<int[]> sBuffAllMovePossibleState = AllMovepossibleState(boardState);
 
-        for (int[] jump : sBuffAllMoveposibleState) {
+        for (int[] jump : sBuffAllMovePossibleState) {
             state.add(jump(boardState, jump));
         }
 
@@ -88,31 +86,29 @@ public class Solved {
         return true;
     }
 
-    private List<int[]> AllMoveposibleState(boolean[] BoardState) {
+    private List<int[]> AllMovepossibleState(boolean[] BoardState) {
 
-        buffAllMoveposibleState.clear();
-        MovePosible.clear();
+        buffAllMovePossibleState.clear();
+        MovePossible.clear();
 
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size - i; j++) {
                 if (BoardState[om.index(i, j, size)]) {
 
-                    MovePosible = movePosible(i, j, BoardState);
-                    if (MovePosible.size() != 0) {
-                        for (int[] q: MovePosible) {
-                            buffAllMoveposibleState.add(q);
-                        }
+                    MovePossible = movePossible(i, j, BoardState);
+                    if (MovePossible.size() != 0) {
+                        buffAllMovePossibleState.addAll(MovePossible);
                     }
                 }
             }
         }
 
-        return buffAllMoveposibleState;
+        return buffAllMovePossibleState;
     }
 
-    private List<int[]> movePosible(int pos_x, int pos_y, boolean[] BoardState) {
+    private List<int[]> movePossible(int pos_x, int pos_y, boolean[] BoardState) {
 
-        buffMovePosible.clear();
+        buffMovePossible.clear();
 
         int mSPos_x;
         int mSPos_y;
@@ -135,7 +131,7 @@ public class Solved {
                     if (bPointExist(mSPos_x, mSPos_y) && bPointExist(mEPos_x, mEPos_y)) {
                         if (BoardState[om.index(mSPos_x, mSPos_y, size)] != BoardState[om.index(mEPos_x, mEPos_y, size)]) {
                             if (BoardState[om.index(mSPos_x, mSPos_y, size)]) {
-                                buffMovePosible.add(new int[]{mSPos_x, mSPos_y, mEPos_x, mEPos_y, pos_x, pos_y});
+                                buffMovePossible.add(new int[]{mSPos_x, mSPos_y, mEPos_x, mEPos_y, pos_x, pos_y});
                             }
                         }
                     }
@@ -143,7 +139,7 @@ public class Solved {
             }
         }
 
-        return buffMovePosible;
+        return buffMovePossible;
     }
 
     private boolean bPointExist(int mPos_x, int mPos_y) {
@@ -165,6 +161,7 @@ public class Solved {
         buffState[om.index(points[2], points[3], size)] = true;
         buffState[om.index(points[4], points[5], size)] = false;
         return buffState;
+
     }
 
 }
