@@ -6,7 +6,8 @@ public class BoardState {
     private boolean [] BoardState;
 
     private List<int[]> Leap = new ArrayList();
-    List<BoardState> NextBoardState = new ArrayList();
+
+    List<BoardState> NextBoardStates = new ArrayList();
 
     public BoardState (boolean[] boardState) {
         this.BoardState = boardState;
@@ -25,17 +26,17 @@ public class BoardState {
     }
 
     public void addNextBoardState(BoardState nbs) {
-        NextBoardState.add(nbs);
+        NextBoardStates.add(nbs);
     }
 
     public int numNextBoardState(){
-        return NextBoardState.size();
+        return NextBoardStates.size();
     }
     public BoardState getFirstNextBoardState(){
-        return NextBoardState.get(0);
+        return NextBoardStates.get(0);
     }
     public void removeFirstNextBoardState(){
-        NextBoardState.remove(0);
+        NextBoardStates.remove(0);
     }
 
 }

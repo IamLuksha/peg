@@ -30,7 +30,6 @@ public class OtherMethodTest {
             data.add(ij_i);
         }
         input.close();
-        input.close();
 
         // act
         int res;

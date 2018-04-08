@@ -47,6 +47,7 @@ class Solved {
         return foundSolved;
     }
 
+
     private void printWinningWay(BoardState boardState) {
         om.print(boardState.getBoardState(),size);
         System.out.println();
@@ -61,7 +62,9 @@ class Solved {
         }
     }
 
-    private List<boolean[]> possibleState(boolean[] boardState) {
+    //все возможные состояния после всех возможных ходов
+    /*private*/ List<boolean[]> possibleState(boolean[] boardState) {
+
         List<boolean[]> state = new ArrayList();
 
         List<int[]> sBuffAllMovePossibleState = AllMovepossibleState(boardState);
@@ -73,19 +76,23 @@ class Solved {
         return state;
     }
 
-    private boolean bSolved(boolean[] BoardState) {
+    // если больше одной фишки на поле, то игра не пройдена.
+    /*private*/ boolean bSolved(boolean[] BoardState) {
+
         int count = 0;
         for (boolean b : BoardState) {
             if (b) {
                 count++;
             }
-            if (count > 1) {
+            if (count > 1) { // упрощаем счёт, если больше 1,
+                // то дальше можно не считать, ибо точно не решена
                 return false;
             }
         }
         return true;
     }
 
+    // все возможные ходы для текущего состояния игрового поля.
     private List<int[]> AllMovepossibleState(boolean[] BoardState) {
 
         buffAllMovePossibleState.clear();
@@ -131,6 +138,7 @@ class Solved {
                     if (bPointExist(mSPos_x, mSPos_y) && bPointExist(mEPos_x, mEPos_y)) {
                         if (BoardState[om.index(mSPos_x, mSPos_y, size)] != BoardState[om.index(mEPos_x, mEPos_y, size)]) {
                             if (BoardState[om.index(mSPos_x, mSPos_y, size)]) {
+                                // все возможные ходы через точку [pos_x, pos_y]
                                 buffMovePossible.add(new int[]{mSPos_x, mSPos_y, mEPos_x, mEPos_y, pos_x, pos_y});
                             }
                         }
@@ -142,7 +150,9 @@ class Solved {
         return buffMovePossible;
     }
 
-    private boolean bPointExist(int mPos_x, int mPos_y) {
+
+    // проверка на выход рточки за границу треугольника.
+    /*private*/ boolean bPointExist(int mPos_x, int mPos_y) {
         return (mPos_x >= 0 && mPos_y >= 0 && mPos_x < size && mPos_y < size - mPos_x);
     }
 
@@ -155,10 +165,13 @@ class Solved {
     }
 
     private boolean[] jump(boolean[] state, int[] points) {
-
+        //
         boolean[] buffState = state.clone();
+        //move
         buffState[om.index(points[0], points[1], size)] = false;
+        //to
         buffState[om.index(points[2], points[3], size)] = true;
+        //over
         buffState[om.index(points[4], points[5], size)] = false;
         return buffState;
 
